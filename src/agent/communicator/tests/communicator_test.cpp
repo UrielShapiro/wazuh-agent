@@ -4,6 +4,7 @@
 #include <communicator.hpp>
 #include <http_request_params.hpp>
 #include <ihttp_client.hpp>
+#include <mock_event_saver.hpp>
 #include <mock_http_client.hpp>
 
 #include <jwt-cpp/jwt.h>
@@ -317,6 +318,52 @@ TEST_F(CommunicatorTest, AuthenticateWithUuidAndKey_FailureThrowsException)
     EXPECT_CALL(*m_mockHttpClientPtr, PerformHttpRequest(testing::_)).WillOnce(testing::Return(expectedResponse));
 
     EXPECT_THROW(m_communicator->AuthenticateWithUuidAndKey(), std::runtime_error);
+}
+
+TEST_F(CommunicatorTest, StatelessMessageProcessingTask_WithEventSaver)
+{
+    auto mockEventSaver = std::make_shared<MockEventSaver>();
+
+    auto mockHttpClient = std::make_unique<MockHttpClient>();
+    auto* mockHttpClientPtr = mockHttpClient.get();
+    testing::Mock::AllowLeak(mockHttpClientPtr);
+
+    auto mockedToken = CreateToken();
+
+    auto communicatorWithSaver = std::make_shared<communicator::Communicator>(
+        std::move(mockHttpClient), MOCK_CONFIG_PARSER_LOOP, "uuid", "key", nullptr, mockEventSaver);
+
+    EXPECT_CALL(*mockHttpClientPtr, PerformHttpRequest(testing::_))
+        .WillRepeatedly(Invoke([token = mockedToken]() -> intStringTuple
+                               { return {http_client::HTTP_CODE_OK, R"({"token":")" + token + R"("})"}; }));
+
+    const auto reqParams = http_client::HttpRequestParams(
+        http_client::MethodType::POST, "https://localhost:27000", "/api/v1/events/stateless", "", "none");
+
+    EXPECT_CALL(*mockHttpClientPtr, Co_PerformHttpRequest(HttpRequestParamsCheck(reqParams, mockedToken, "message")))
+        .WillOnce(Invoke(
+            [&communicatorWithSaver]() -> boost::asio::awaitable<intStringTuple>
+            {
+                communicatorWithSaver->Stop();
+                co_return intStringTuple {http_client::HTTP_CODE_OK, "Dummy response"};
+            }));
+
+    EXPECT_CALL(*mockEventSaver, IsEnabled()).WillOnce(testing::Return(true));
+    EXPECT_CALL(*mockEventSaver, SaveEvents("message")).WillOnce(testing::Return(true));
+
+    auto onSuccessCalled = false;
+
+    SpawnCoroutine(
+        [&communicatorWithSaver, &onSuccessCalled]() mutable -> boost::asio::awaitable<void>
+        {
+            communicatorWithSaver->SendAuthenticationRequest();
+            co_await communicatorWithSaver->StatelessMessageProcessingTask(
+                [](const size_t) -> boost::asio::awaitable<intStringTuple>
+                { co_return intStringTuple {1, std::string {"message"}}; },
+                [&onSuccessCalled](const int, const std::string&) { onSuccessCalled = true; });
+        });
+
+    EXPECT_TRUE(onSuccessCalled);
 }
 
 int main(int argc, char** argv)
