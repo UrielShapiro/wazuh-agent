@@ -366,6 +366,56 @@ TEST_F(CommunicatorTest, StatelessMessageProcessingTask_WithEventSaver)
     EXPECT_TRUE(onSuccessCalled);
 }
 
+TEST_F(CommunicatorTest, StatelessMessageProcessingTask_EventsSavedBeforeSending)
+{
+    auto mockEventSaver = std::make_shared<MockEventSaver>();
+
+    auto mockHttpClient = std::make_unique<MockHttpClient>();
+    auto* mockHttpClientPtr = mockHttpClient.get();
+    testing::Mock::AllowLeak(mockHttpClientPtr);
+
+    auto mockedToken = CreateToken();
+
+    auto communicatorWithSaver = std::make_shared<communicator::Communicator>(
+        std::move(mockHttpClient), MOCK_CONFIG_PARSER_LOOP, "uuid", "key", nullptr, mockEventSaver);
+
+    EXPECT_CALL(*mockHttpClientPtr, PerformHttpRequest(testing::_))
+        .WillRepeatedly(Invoke([token = mockedToken]() -> intStringTuple
+                               { return {http_client::HTTP_CODE_OK, R"({"token":")" + token + R"("})"}; }));
+
+    const auto reqParams = http_client::HttpRequestParams(
+        http_client::MethodType::POST, "https://localhost:27000", "/api/v1/events/stateless", "", "none");
+
+    // Events should be saved even when the HTTP request fails
+    EXPECT_CALL(*mockHttpClientPtr, Co_PerformHttpRequest(HttpRequestParamsCheck(reqParams, mockedToken, "message")))
+        .WillOnce(Invoke(
+            [&communicatorWithSaver]() -> boost::asio::awaitable<intStringTuple>
+            {
+                communicatorWithSaver->Stop();
+                // Return a failure status code
+                co_return intStringTuple {http_client::HTTP_CODE_INTERNAL_SERVER_ERROR, "Server error"};
+            }));
+
+    // Events should still be saved regardless of HTTP response
+    EXPECT_CALL(*mockEventSaver, IsEnabled()).WillOnce(testing::Return(true));
+    EXPECT_CALL(*mockEventSaver, SaveEvents("message")).WillOnce(testing::Return(true));
+
+    auto onSuccessCalled = false;
+
+    SpawnCoroutine(
+        [&communicatorWithSaver, &onSuccessCalled]() mutable -> boost::asio::awaitable<void>
+        {
+            communicatorWithSaver->SendAuthenticationRequest();
+            co_await communicatorWithSaver->StatelessMessageProcessingTask(
+                [](const size_t) -> boost::asio::awaitable<intStringTuple>
+                { co_return intStringTuple {1, std::string {"message"}}; },
+                [&onSuccessCalled](const int, const std::string&) { onSuccessCalled = true; });
+        });
+
+    // onSuccess should NOT be called when the request fails
+    EXPECT_FALSE(onSuccessCalled);
+}
+
 int main(int argc, char** argv)
 {
     ::testing::InitGoogleTest(&argc, argv);

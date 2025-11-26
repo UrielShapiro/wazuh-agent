@@ -396,21 +396,21 @@ namespace communicator
 
             reqParams.Token = *m_token;
 
+            // Save events locally before sending to manager (if event saver is configured and there are messages)
+            if (m_eventSaver && m_eventSaver->IsEnabled() && !reqParams.Body.empty() && messageGetter != nullptr)
+            {
+                if (!m_eventSaver->SaveEvents(reqParams.Body))
+                {
+                    LogWarn("Failed to save events locally.");
+                }
+            }
+
             const auto [statusCode, responseBody] = co_await m_httpClient->Co_PerformHttpRequest(reqParams);
 
             std::time_t timerSleep = A_SECOND_IN_MILLIS;
 
             if (statusCode >= http_client::HTTP_CODE_OK && statusCode < http_client::HTTP_CODE_MULTIPLE_CHOICES)
             {
-                // Save events locally if event saver is configured and there are messages
-                if (m_eventSaver && m_eventSaver->IsEnabled() && !reqParams.Body.empty() && messageGetter != nullptr)
-                {
-                    if (!m_eventSaver->SaveEvents(reqParams.Body))
-                    {
-                        LogWarn("Failed to save events locally.");
-                    }
-                }
-
                 if (onSuccess != nullptr)
                 {
                     onSuccess(messagesCount, responseBody);
