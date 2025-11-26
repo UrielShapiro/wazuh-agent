@@ -10,6 +10,7 @@ add_subdirectory(centralized_configuration)
 add_subdirectory(command_handler)
 add_subdirectory(communicator)
 add_subdirectory(configuration_parser)
+add_subdirectory(event_saver)
 add_subdirectory(http_client)
 add_subdirectory(instance_communicator)
 add_subdirectory(multitype_queue)
@@ -51,6 +52,7 @@ target_link_libraries(
            CommandHandler
            Communicator
            ConfigurationParser
+           EventSaver
            HttpClient
            InstanceCommunicator
            MultiTypeQueue

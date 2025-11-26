@@ -15,7 +15,7 @@ target_include_directories(Communicator PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/inclu
                            PRIVATE ${JWT_CPP_INCLUDE_DIRS})
 
 target_compile_definitions(Communicator PRIVATE -DJWT_DISABLE_PICOJSON=ON)
-target_link_libraries(Communicator PUBLIC HttpClient ConfigurationParser Boost::asio
+target_link_libraries(Communicator PUBLIC HttpClient ConfigurationParser EventSaver Boost::asio
                       PRIVATE Config Boost::url nlohmann_json::nlohmann_json Logger)
 
 include(../../cmake/ConfigureTarget.cmake)

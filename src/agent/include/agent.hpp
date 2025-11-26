@@ -3,8 +3,10 @@
 #include <centralized_configuration.hpp>
 #include <communicator.hpp>
 #include <configuration_parser.hpp>
+#include <event_saver.hpp>
 #include <iagent_info.hpp>
 #include <icommand_handler.hpp>
+#include <ievent_saver.hpp>
 #include <ihttp_client.hpp>
 #include <iinstance_communicator.hpp>
 #include <imoduleManager.hpp>
@@ -36,6 +38,7 @@ public:
     /// @param moduleManager Pointer to a custom IModuleManager implementation
     /// @param instanceCommunicator Pointer to a custom IInstanceCommunicator implementation
     /// @param messageQueue Pointer to a custom IMultiTypeQueue implementation
+    /// @param eventSaver Pointer to a custom IEventSaver implementation
     /// @throws std::runtime_error If the Agent is not enrolled
     /// @throws Any exception propagated from dependencies used within the constructor
     Agent(std::unique_ptr<configuration::ConfigurationParser> configurationParser =
@@ -46,7 +49,8 @@ public:
           std::unique_ptr<command_handler::ICommandHandler> commandHandler = nullptr,
           std::unique_ptr<IModuleManager> moduleManager = nullptr,
           std::unique_ptr<instance_communicator::IInstanceCommunicator> instanceCommunicator = nullptr,
-          std::shared_ptr<IMultiTypeQueue> messageQueue = nullptr);
+          std::shared_ptr<IMultiTypeQueue> messageQueue = nullptr,
+          std::shared_ptr<event_saver::IEventSaver> eventSaver = nullptr);
 
     /// @brief Destructor
     ~Agent();
@@ -80,6 +84,9 @@ private:
 
     /// @brief Queue for storing messages
     std::shared_ptr<IMultiTypeQueue> m_messageQueue;
+
+    /// @brief Event saver for saving events locally
+    std::shared_ptr<event_saver::IEventSaver> m_eventSaver;
 
     /// @brief Communicator
     communicator::Communicator m_communicator;

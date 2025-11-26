@@ -1,6 +1,7 @@
 #pragma once
 
 #include <configuration_parser.hpp>
+#include <ievent_saver.hpp>
 #include <ihttp_client.hpp>
 
 #include <boost/asio/awaitable.hpp>
@@ -32,11 +33,13 @@ namespace communicator
         /// @param uuid The unique identifier for the agent
         /// @param key The key for authentication
         /// @param getHeaderInfo Function to get the user agent header
+        /// @param eventSaver Optional event saver for saving events locally
         Communicator(std::unique_ptr<http_client::IHttpClient> httpClient,
                      std::shared_ptr<configuration::ConfigurationParser> configurationParser,
                      std::string uuid,
                      std::string key,
-                     std::function<std::string()> getHeaderInfo);
+                     std::function<std::string()> getHeaderInfo,
+                     std::shared_ptr<event_saver::IEventSaver> eventSaver = nullptr);
 
         /// @brief Sends an authentication request to the manager
         /// @return true if the request was sent successfully, false otherwise
@@ -138,5 +141,8 @@ namespace communicator
 
         /// @brief Timeout for command requests to manager in millisecconds.
         std::time_t m_timeoutCommands;
+
+        /// @brief Event saver for saving events locally
+        std::shared_ptr<event_saver::IEventSaver> m_eventSaver;
     };
 } // namespace communicator
