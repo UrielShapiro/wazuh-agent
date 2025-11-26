@@ -1,9 +1,0 @@
-Package: boost-uuid
-Version: 1.85.0
-Port-Version: 1
-Depends: boost-assert, boost-cmake, boost-config, boost-container-hash, boost-core, boost-headers, boost-io, boost-move, boost-numeric-conversion, boost-predef, boost-random, boost-static-assert, boost-throw-exception, boost-tti, boost-type-traits, boost-winapi
-Architecture: x64-linux
-Multi-Arch: same
-Abi: fe14d8c1e0713f587f61fb88dd86d7180d507117f1e2f56833aed056600e5e88
-Description: Boost uuid module
-Status: install ok half-installed

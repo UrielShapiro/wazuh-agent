@@ -1,9 +1,0 @@
-Package: boost-url
-Version: 1.85.0
-Port-Version: 1
-Depends: boost-align, boost-assert, boost-cmake, boost-config, boost-core, boost-headers, boost-mp11, boost-optional, boost-static-assert, boost-system, boost-throw-exception, boost-type-traits, boost-variant2
-Architecture: x64-linux
-Multi-Arch: same
-Abi: 3e5c4fd51735a97c30c03b7c1a60e23da59968307166fdacea150bd664eeeee6
-Description: Boost url module
-Status: install ok half-installed

@@ -1,9 +1,0 @@
-Package: boost-logic
-Version: 1.85.0
-Port-Version: 1
-Depends: boost-cmake, boost-config, boost-core, boost-headers
-Architecture: x64-linux
-Multi-Arch: same
-Abi: 9a25083651ecdb66072adc39bd4434ce1b3e1b32c2d66ddb746d18a1e6b5ad8c
-Description: Boost logic module
-Status: install ok half-installed

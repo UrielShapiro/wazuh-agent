@@ -1,9 +1,0 @@
-Package: boost-typeof
-Version: 1.85.0
-Port-Version: 1
-Depends: boost-cmake, boost-config, boost-headers
-Architecture: x64-linux
-Multi-Arch: same
-Abi: a76672c504d6bebf659992fb2f5b1538b03fb69d696134beead8fdf37905c879
-Description: Boost typeof module
-Status: install ok half-installed

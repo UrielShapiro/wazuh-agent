@@ -1,9 +1,0 @@
-Package: boost-dynamic-bitset
-Version: 1.85.0
-Port-Version: 1
-Depends: boost-assert, boost-cmake, boost-config, boost-container-hash, boost-core, boost-headers, boost-integer, boost-move, boost-static-assert, boost-throw-exception
-Architecture: x64-linux
-Multi-Arch: same
-Abi: 8a8f8cd4e706a507c8348d8768b423bd38a36c4c14d7c141fa65ddbc07e11cc3
-Description: Boost dynamic_bitset module
-Status: install ok half-installed
