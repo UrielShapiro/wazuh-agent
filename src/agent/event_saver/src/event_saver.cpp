@@ -51,9 +51,14 @@ namespace event_saver
 
     bool EventSaver::SaveEvents(const std::string& events)
     {
-        if (!m_enabled || events.empty())
+        if (!m_enabled)
         {
-            return !m_enabled; // Return true if disabled (nothing to do), false if enabled but empty
+            return true; // Nothing to do if disabled
+        }
+
+        if (events.empty())
+        {
+            return true; // Empty events are not an error
         }
 
         const std::lock_guard<std::mutex> lock(m_mutex);
