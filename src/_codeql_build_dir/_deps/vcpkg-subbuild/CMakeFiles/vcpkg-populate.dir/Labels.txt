@@ -1,0 +1,14 @@
+# Target labels
+ vcpkg-populate
+# Source files and their labels
+/home/runner/work/wazuh-agent/wazuh-agent/src/_codeql_build_dir/_deps/vcpkg-subbuild/CMakeFiles/vcpkg-populate
+/home/runner/work/wazuh-agent/wazuh-agent/src/_codeql_build_dir/_deps/vcpkg-subbuild/CMakeFiles/vcpkg-populate.rule
+/home/runner/work/wazuh-agent/wazuh-agent/src/_codeql_build_dir/_deps/vcpkg-subbuild/CMakeFiles/vcpkg-populate-complete.rule
+/home/runner/work/wazuh-agent/wazuh-agent/src/_codeql_build_dir/_deps/vcpkg-subbuild/vcpkg-populate-prefix/src/vcpkg-populate-stamp/vcpkg-populate-build.rule
+/home/runner/work/wazuh-agent/wazuh-agent/src/_codeql_build_dir/_deps/vcpkg-subbuild/vcpkg-populate-prefix/src/vcpkg-populate-stamp/vcpkg-populate-configure.rule
+/home/runner/work/wazuh-agent/wazuh-agent/src/_codeql_build_dir/_deps/vcpkg-subbuild/vcpkg-populate-prefix/src/vcpkg-populate-stamp/vcpkg-populate-download.rule
+/home/runner/work/wazuh-agent/wazuh-agent/src/_codeql_build_dir/_deps/vcpkg-subbuild/vcpkg-populate-prefix/src/vcpkg-populate-stamp/vcpkg-populate-install.rule
+/home/runner/work/wazuh-agent/wazuh-agent/src/_codeql_build_dir/_deps/vcpkg-subbuild/vcpkg-populate-prefix/src/vcpkg-populate-stamp/vcpkg-populate-mkdir.rule
+/home/runner/work/wazuh-agent/wazuh-agent/src/_codeql_build_dir/_deps/vcpkg-subbuild/vcpkg-populate-prefix/src/vcpkg-populate-stamp/vcpkg-populate-patch.rule
+/home/runner/work/wazuh-agent/wazuh-agent/src/_codeql_build_dir/_deps/vcpkg-subbuild/vcpkg-populate-prefix/src/vcpkg-populate-stamp/vcpkg-populate-test.rule
+/home/runner/work/wazuh-agent/wazuh-agent/src/_codeql_build_dir/_deps/vcpkg-subbuild/vcpkg-populate-prefix/src/vcpkg-populate-stamp/vcpkg-populate-update.rule

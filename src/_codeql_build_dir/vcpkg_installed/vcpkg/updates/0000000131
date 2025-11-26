@@ -1,0 +1,9 @@
+Package: boost-program-options
+Version: 1.85.0
+Port-Version: 2
+Depends: boost-any, boost-bind, boost-cmake, boost-config, boost-core, boost-detail, boost-function, boost-headers, boost-iterator, boost-lexical-cast, boost-smart-ptr, boost-static-assert, boost-throw-exception, boost-tokenizer, boost-type-traits
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 9a961525fd168c59eeeacb15d087d883f7f05998ae83e5f66789dd4292fb2256
+Description: Boost program_options module
+Status: install ok installed

@@ -1,0 +1,110 @@
+{
+  "$schema": "https://raw.githubusercontent.com/spdx/spdx-spec/v2.2.1/schemas/spdx-schema.json",
+  "spdxVersion": "SPDX-2.2",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "documentNamespace": "https://spdx.org/spdxdocs/cjson-x64-linux-1.7.17-5abaf27c-cb64-4b6b-8776-0b761dbd3d53",
+  "name": "cjson:x64-linux@1.7.17 6307aa733ed14ed38d0ca9b27ba37c228785421c2663a6e259e55d4ebe0e1a06",
+  "creationInfo": {
+    "creators": [
+      "Tool: vcpkg-2024-09-30-ab8988503c7cffabfd440b243a383c0a352a023d"
+    ],
+    "created": "2025-11-26T20:30:10Z"
+  },
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "GENERATES",
+      "relatedSpdxElement": "SPDXRef-binary"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-0"
+    },
+    {
+      "spdxElementId": "SPDXRef-port",
+      "relationshipType": "CONTAINS",
+      "relatedSpdxElement": "SPDXRef-file-1"
+    },
+    {
+      "spdxElementId": "SPDXRef-binary",
+      "relationshipType": "GENERATED_FROM",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-0",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    },
+    {
+      "spdxElementId": "SPDXRef-file-1",
+      "relationshipType": "CONTAINED_BY",
+      "relatedSpdxElement": "SPDXRef-port"
+    }
+  ],
+  "packages": [
+    {
+      "name": "cjson",
+      "SPDXID": "SPDXRef-port",
+      "versionInfo": "1.7.17",
+      "downloadLocation": "git+https://github.com/Microsoft/vcpkg@3641d0d369b02515b4979956d884a2be91ac515b",
+      "homepage": "https://github.com/DaveGamble/cJSON",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "description": "Ultralightweight JSON parser in ANSI C",
+      "comment": "This is the port (recipe) consumed by vcpkg."
+    },
+    {
+      "name": "cjson:x64-linux",
+      "SPDXID": "SPDXRef-binary",
+      "versionInfo": "6307aa733ed14ed38d0ca9b27ba37c228785421c2663a6e259e55d4ebe0e1a06",
+      "downloadLocation": "NONE",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "comment": "This is a binary package built by vcpkg."
+    },
+    {
+      "SPDXID": "SPDXRef-resource-1",
+      "name": "DaveGamble/cJSON",
+      "downloadLocation": "git+https://github.com/DaveGamble/cJSON@v1.7.17",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        {
+          "algorithm": "SHA512",
+          "checksumValue": "4feebafa5225297fa3e6a7bf23f8d31b5c3e172f437078c5a07528522ad58ca2e9c72dd9e8611241d2b8321e9aa0a1a9af7743689d1c2001d1d9cb624aae6fa8"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "fileName": ".//home/runner/.cache/vcpkg/registries/git-trees/3641d0d369b02515b4979956d884a2be91ac515b/vcpkg.json",
+      "SPDXID": "SPDXRef-file-0",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "28985e1fd0e3ba4194705a1774f15e1e68e265a6263fd386f2dfa9df38c158ce"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    },
+    {
+      "fileName": ".//home/runner/.cache/vcpkg/registries/git-trees/3641d0d369b02515b4979956d884a2be91ac515b/portfile.cmake",
+      "SPDXID": "SPDXRef-file-1",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "f3bd3b5af7896ce0dcd36a3828b8420e47f51d51659959cb54ce320ac187d666"
+        }
+      ],
+      "licenseConcluded": "NOASSERTION",
+      "copyrightText": "NOASSERTION"
+    }
+  ]
+}

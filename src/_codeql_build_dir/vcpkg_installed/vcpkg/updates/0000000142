@@ -1,0 +1,8 @@
+Package: cjson
+Version: 1.7.17
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 6307aa733ed14ed38d0ca9b27ba37c228785421c2663a6e259e55d4ebe0e1a06
+Description: Ultralightweight JSON parser in ANSI C
+Status: install ok half-installed

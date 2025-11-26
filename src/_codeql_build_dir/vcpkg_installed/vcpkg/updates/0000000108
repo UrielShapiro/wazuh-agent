@@ -1,0 +1,9 @@
+Package: boost-asio
+Version: 1.85.0
+Port-Version: 2
+Depends: boost-align, boost-assert, boost-cmake, boost-config, boost-context, boost-coroutine, boost-date-time, boost-headers, boost-system, boost-throw-exception
+Architecture: x64-linux
+Multi-Arch: same
+Abi: c00c1d9f165b6912fe050d695d367582beb3525d435f163cc9be81b7a54c4fcb
+Description: Boost asio module
+Status: install ok half-installed

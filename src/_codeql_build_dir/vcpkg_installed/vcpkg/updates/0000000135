@@ -1,0 +1,9 @@
+Package: boost-tti
+Version: 1.85.0
+Port-Version: 1
+Depends: boost-cmake, boost-config, boost-function-types, boost-headers, boost-mpl, boost-preprocessor, boost-type-traits
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 37f4772c331364a3de7038629b887c859d38634ec044ab29de8c8e54ddbbc23d
+Description: Boost tti module
+Status: install ok installed
