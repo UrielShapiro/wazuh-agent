@@ -7,6 +7,8 @@ agent:
 events:
   batch_interval: 10s
   batch_size: 1MB
+  save_locally: false
+  save_path: /var/lib/wazuh-agent/events.log
 inventory:
   enabled: true
   interval: 1h

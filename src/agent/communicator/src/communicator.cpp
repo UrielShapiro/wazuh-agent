@@ -48,12 +48,14 @@ namespace communicator
                                std::shared_ptr<configuration::ConfigurationParser> configurationParser,
                                std::string uuid,
                                std::string key,
-                               std::function<std::string()> getHeaderInfo)
+                               std::function<std::string()> getHeaderInfo,
+                               std::shared_ptr<event_saver::IEventSaver> eventSaver)
         : m_httpClient(std::move(httpClient))
         , m_uuid(std::move(uuid))
         , m_key(std::move(key))
         , m_getHeaderInfo(std::move(getHeaderInfo))
         , m_token(std::make_shared<std::string>())
+        , m_eventSaver(std::move(eventSaver))
     {
         if (!m_httpClient)
         {
@@ -400,6 +402,15 @@ namespace communicator
 
             if (statusCode >= http_client::HTTP_CODE_OK && statusCode < http_client::HTTP_CODE_MULTIPLE_CHOICES)
             {
+                // Save events locally if event saver is configured and there are messages
+                if (m_eventSaver && m_eventSaver->IsEnabled() && !reqParams.Body.empty() && messageGetter != nullptr)
+                {
+                    if (!m_eventSaver->SaveEvents(reqParams.Body))
+                    {
+                        LogWarn("Failed to save events locally.");
+                    }
+                }
+
                 if (onSuccess != nullptr)
                 {
                     onSuccess(messagesCount, responseBody);

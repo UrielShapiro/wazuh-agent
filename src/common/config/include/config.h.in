@@ -26,6 +26,12 @@ namespace config
         constexpr auto DEFAULT_COMMANDS_REQUEST_TIMEOUT = @DEFAULT_COMMANDS_REQUEST_TIMEOUT@;
     }
 
+    namespace events
+    {
+        constexpr auto DEFAULT_SAVE_ENABLED = @DEFAULT_EVENTS_SAVE_ENABLED@;
+        constexpr auto DEFAULT_SAVE_PATH = "@DEFAULT_EVENTS_SAVE_PATH@";
+    }
+
     namespace logcollector
     {
         constexpr auto DEFAULT_ENABLED = @DEFAULT_LOGCOLLECTOR_ENABLED@;

@@ -25,7 +25,8 @@ Agent::Agent(std::unique_ptr<configuration::ConfigurationParser> configurationPa
              std::unique_ptr<command_handler::ICommandHandler> commandHandler,
              std::unique_ptr<IModuleManager> moduleManager,
              std::unique_ptr<instance_communicator::IInstanceCommunicator> instanceCommunicator,
-             std::shared_ptr<IMultiTypeQueue> messageQueue)
+             std::shared_ptr<IMultiTypeQueue> messageQueue,
+             std::shared_ptr<event_saver::IEventSaver> eventSaver)
     : m_signalHandler(std::move(signalHandler))
     , m_configurationParser(std::move(configurationParser))
     , m_agentInfo(agentInfo
@@ -35,11 +36,18 @@ Agent::Agent(std::unique_ptr<configuration::ConfigurationParser> configurationPa
                             [this]() { return m_sysInfo.os(); },
                             [this]() { return m_sysInfo.networks(); }))
     , m_messageQueue(messageQueue ? std::move(messageQueue) : std::make_shared<MultiTypeQueue>(m_configurationParser))
+    , m_eventSaver(eventSaver ? std::move(eventSaver)
+                              : std::make_shared<event_saver::EventSaver>(
+                                    m_configurationParser->GetConfigOrDefault(
+                                        config::events::DEFAULT_SAVE_ENABLED, "events", "save_locally"),
+                                    m_configurationParser->GetConfigOrDefault(
+                                        config::events::DEFAULT_SAVE_PATH, "events", "save_path")))
     , m_communicator(httpClient ? std::move(httpClient) : std::make_unique<http_client::HttpClient>(),
                      m_configurationParser,
                      m_agentInfo->GetUUID(),
                      m_agentInfo->GetKey(),
-                     [this]() { return m_agentInfo->GetHeaderInfo(); })
+                     [this]() { return m_agentInfo->GetHeaderInfo(); },
+                     m_eventSaver)
     , m_moduleManager(moduleManager
                           ? std::move(moduleManager)
                           : std::make_unique<ModuleManager>([this](Message message) -> int

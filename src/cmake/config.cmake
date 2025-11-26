@@ -81,6 +81,15 @@ set(QUEUE_DEFAULT_SIZE "\"10000B\"" CACHE STRING "Default Agent's queue size (10
 
 set(DEFAULT_COMMANDS_REQUEST_TIMEOUT "\"11m\"" CACHE STRING "Default Agent's command request timeout (11m)")
 
+# Event saving defaults
+set(DEFAULT_EVENTS_SAVE_ENABLED false CACHE BOOL "Default event saving enabled")
+
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    string(REPLACE "\\" "\\\\" DEFAULT_EVENTS_SAVE_PATH "${DATA_INSTALL_DIR}\\\\events.log")
+else()
+    set(DEFAULT_EVENTS_SAVE_PATH "/${DATA_INSTALL_DIR}/events.log")
+endif()
+
 set(DEFAULT_SCA_ENABLED true CACHE BOOL "Default SCA enabled")
 
 set(DEFAULT_SCA_INTERVAL "\"1h\"" CACHE STRING "Default SCA interval (1h)")
